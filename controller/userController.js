@@ -62,3 +62,47 @@ exports.login = async (req, res) => {
     }
 };
 
+exports.getAll = async (req, res) => {
+    try {
+        const data = await userModel.find();
+        res.json(data);
+    }catch(error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
+exports.getUserById = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const data = await userModel.findById(id);
+        res.json(data);
+    } catch(error) {
+        res.status(500).json({message: error.message});
+    }
+}
+
+exports.updateUser = async (req, res) => {
+    try {
+        const id = req.params.id; 
+        const updatedData = req.body; 
+        const options = {new: true};
+        
+        const result = await userModel.findByIdAndUpdate(
+            id, updatedData, options
+        )
+        res.send(result);
+    } catch(error) {
+        res.status(400).json({message: error.message})
+    }
+}
+
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const id = req.params.id; 
+        const data = await userModel.findByIdAndDelete(id);
+        res.send(data);
+    }catch(error) {
+        res.status(400).json({message: error.message})
+    }
+}
