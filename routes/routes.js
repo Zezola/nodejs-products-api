@@ -4,19 +4,22 @@ const productController = require('../controller/productController');
 const userController = require('../controller/userController');
 
 const auth = require('../middleware/auth');
+const role = require('../middleware/role');
 
 const router = express.Router();
 
+
 /* -- PRODUCT ROUTES -- */
-router.post("/products", auth, productController.save);
+
+router.post("/products", auth, role, productController.save);
 
 router.get("/products", auth, productController.getAll);
 
 router.get("/products/:id", auth, productController.getById);
 
-router.patch("/products/:id", auth, productController.updateById);
+router.patch("/products/:id", auth, role, productController.updateById);
 
-router.delete("/products/:id", auth, productController.deleteById);
+router.delete("/products/:id", auth, role, productController.deleteById);
 /* -------------------- */
 
 /* -- USER ROUTES -- */
