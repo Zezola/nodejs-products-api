@@ -12,7 +12,7 @@ const userSchema = new mongoose.Schema({
     role: {
         required: true,
         type: String,
-        enum: ['ADMIN', 'NORMAL']
+        enum: ['SUPERADMIN', 'ADMIN', 'VISITOR']
     },
     token: {
         type: String

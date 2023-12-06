@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 
 exports.register = async (req, res) => {
     try {
-        const {username, password, role} = req.body;
+        const {username, password} = req.body;
         /* Verify if all the input fields are filled */
         if (!(username && password)) {
             res.status(400).send("username and password are required")
@@ -21,7 +21,7 @@ exports.register = async (req, res) => {
         const user = await userModel.create({
             username: username, 
             password: encryptedPassword,
-            role: role
+            role: "VISITOR"
         })
         
         res.status(201).json(user);
