@@ -11,15 +11,15 @@ const router = express.Router();
 
 /* -- PRODUCT ROUTES -- */
 
-router.post("/products", auth, role, productController.save);
+router.post("/products", auth, role(['SUPERADMIN','ADMIN']), productController.save);
 
 router.get("/products", auth, productController.getAll);
 
 router.get("/products/:id", auth, productController.getById);
 
-router.patch("/products/:id", auth, role, productController.updateById);
+router.patch("/products/:id", auth, role(['SUPERADMIN','ADMIN']), productController.updateById);
 
-router.delete("/products/:id", auth, role, productController.deleteById);
+router.delete("/products/:id", auth, role(['SUPERADMIN','ADMIN']), productController.deleteById);
 /* -------------------- */
 
 /* -- USER ROUTES -- */
@@ -27,12 +27,12 @@ router.post("/register", userController.register);
 
 router.post("/login", userController.login);
 
-router.get("/users", auth, role, userController.getAll);
+router.get("/users", auth, role(['SUPERADMIN','ADMIN']), userController.getAll);
 
-router.get("/users/:id", auth, role, userController.getUserById);
+router.get("/users/:id", auth, role(['SUPERADMIN','ADMIN']), userController.getUserById);
 
-router.patch("/users/:id", auth, role, userController.updateUser);
+router.patch("/users/:id", auth, role(['SUPERADMIN','ADMIN']), userController.updateUser);
 
-router.delete("/users/:id", auth, role, userController.deleteUser);
+router.delete("/users/:id", auth, role(['SUPERADMIN','ADMIN']), userController.deleteUser);
 
 module.exports = router;
