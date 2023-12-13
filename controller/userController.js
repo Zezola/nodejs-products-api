@@ -84,9 +84,10 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const id = req.params.id; 
-        const updatedData = req.body; 
+        const {_id, ...rest} = req.body;
+        const {username, password} = rest;
         const options = {new: true};
-        
+        const updatedData = {username, password}
         const result = await userModel.findByIdAndUpdate(
             id, updatedData, options
         )
