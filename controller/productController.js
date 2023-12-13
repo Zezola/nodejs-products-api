@@ -36,7 +36,9 @@ exports.getById = async (req, res) => {
 exports.updateById = async (req, res) => {
     try {
         const id = req.params.id; 
-        const updatedData = req.body; 
+        const {_id, ...rest} = req.body;
+        const {name, description, price} = rest;
+        const updatedData = {name, description, price};
         const options = {new: true};
         
         const result = await productModel.findByIdAndUpdate(
