@@ -5,6 +5,10 @@ const userController = require('../controller/userController');
 
 const auth = require('../middleware/auth');
 const role = require('../middleware/role');
+const validate = require('../middleware/validate');
+
+/* Import validation schemas */
+const schemas = require('../helper/validationHelper');
 
 const router = express.Router();
 
@@ -23,7 +27,7 @@ router.delete("/products/:id", auth, role(['SUPERADMIN','ADMIN']), productContro
 /* -------------------- */
 
 /* -- USER ROUTES -- */
-router.post("/register", userController.register);
+router.post("/register", validate(schemas.userRegisterSchema), userController.register);
 
 router.post("/login", userController.login);
 
@@ -31,7 +35,7 @@ router.get("/users", auth, role(['SUPERADMIN','ADMIN']), userController.getAll);
 
 router.get("/users/:id", auth, role(['SUPERADMIN','ADMIN']), userController.getUserById);
 
-router.patch("/users/:id", auth, role(['SUPERADMIN','ADMIN']), userController.updateUser);
+router.patch("/users/:id", auth, role(['SUPERADMIN','ADMIN']), validate(schemas.userUpdateSchema), userController.updateUser);
 
 router.delete("/users/:id", auth, role(['SUPERADMIN','ADMIN']), userController.deleteUser);
 

@@ -2,14 +2,16 @@ const userModel = require('../model/user');
 require('dotenv').config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const Joi = require('joi');
 
 exports.register = async (req, res) => {
     try {
-        const {username, password, role} = req.body;
-        /* Verify if all the input fields are filled */
+        
+        const {username, password} = req.body;
+        /* Verify if all the input fields are filled 
         if (!(username && password)) {
             res.status(400).send("username and password are required")
-        }
+        } 
         /* Verify if the username already exists in the database */
         const oldUser = await userModel.findOne({username})
         if (oldUser) {
@@ -21,7 +23,7 @@ exports.register = async (req, res) => {
         const user = await userModel.create({
             username: username, 
             password: encryptedPassword,
-            role: role
+            role: 'NORMAL'
         })
         
         res.status(201).json(user);
@@ -84,8 +86,7 @@ exports.getUserById = async (req, res) => {
 exports.updateUser = async (req, res) => {
     try {
         const id = req.params.id; 
-        const {_id, ...rest} = req.body;
-        const {username, password} = rest;
+        const {username, password} = req.body
         const options = {new: true};
         const updatedData = {username, password}
         const result = await userModel.findByIdAndUpdate(
