@@ -1,6 +1,6 @@
 const Joi = require('joi');
 
-const validate = (schema, property) => {
+const validate = (schema) => {
     return (req, res, next) => {
         const {error} = schema.validate(req.body);
         if (error == null) {
