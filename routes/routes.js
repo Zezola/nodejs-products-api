@@ -6,6 +6,7 @@ const userController = require('../controller/userController');
 const auth = require('../middleware/auth');
 const role = require('../middleware/role');
 const validate = require('../middleware/validate');
+const log = require('../middleware/logger');
 
 /* Import validation schemas */
 const joiValidationSchemas = require('../helper/validationHelper');
